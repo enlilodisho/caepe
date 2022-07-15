@@ -2,8 +2,12 @@ enable_testing()
 add_subdirectory(${PROJECT_SOURCE_DIR}/libs/googletest
         ${CMAKE_CURRENT_BINARY_DIR}/googletest)
 
+include_directories(include)
+
 set(TEST_SOURCE
         DummyTest.cpp
+        ComponentTest.cpp
+        ResultTest.cpp
 )
 
 add_executable(${TEST_NAME} ${TEST_SOURCE})
