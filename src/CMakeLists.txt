@@ -4,6 +4,7 @@ set(SOURCE_FILES
     Dummy.cpp
     Component.cpp
     Result.cpp
+    ComponentsManager.cpp
 )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_FILES})

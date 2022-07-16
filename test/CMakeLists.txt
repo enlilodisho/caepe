@@ -8,6 +8,7 @@ set(TEST_SOURCE
         DummyTest.cpp
         ComponentTest.cpp
         ResultTest.cpp
+        ComponentsManagerTest.cpp
 )
 
 add_executable(${TEST_NAME} ${TEST_SOURCE})
