@@ -10,6 +10,7 @@
 #include <string>
 #include <thread>
 #include <memory>
+#include <mutex>
 
 namespace caepe {
 
@@ -17,8 +18,14 @@ namespace caepe {
     private:
         std::unique_ptr<std::thread> _thread;
         bool _started = false;
+        std::mutex _mtx;
 
         void componentThread();
+
+    protected:
+        virtual void onStart();
+        virtual void onLoop();
+        virtual void onEnd();
 
     public:
         const std::string _name;
@@ -28,10 +35,6 @@ namespace caepe {
 
         Result start();
         Result stop();
-
-        virtual void onStart();
-        virtual void onLoop();
-        virtual void onEnd();
 
         [[nodiscard]]
         bool isStarted() const;

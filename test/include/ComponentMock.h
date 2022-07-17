@@ -14,11 +14,7 @@ private:
     long _ranOnLoop = 0;
     long _ranOnEnd = 0;
 
-public:
-    explicit ComponentMock(const std::string& name) : caepe::Component(name)
-    {
-    }
-
+protected:
     void onStart() override
     {
         _ranOnStart++;
@@ -32,6 +28,11 @@ public:
     void onEnd() override
     {
         _ranOnEnd++;
+    }
+
+public:
+    explicit ComponentMock(const std::string& name) : caepe::Component(name)
+    {
     }
 
     [[nodiscard]]

@@ -14,6 +14,7 @@ namespace caepe {
 
     Component::~Component()
     {
+        std::lock_guard<std::mutex> lock(_mtx);
         if (_started)
         {
             stop();
@@ -22,6 +23,7 @@ namespace caepe {
 
     Result Component::start()
     {
+        std::lock_guard<std::mutex> lock(_mtx);
         if (_started)
         {
             return {RESULT_OK, "Component is already running."};
@@ -33,6 +35,7 @@ namespace caepe {
 
     Result Component::stop()
     {
+        std::lock_guard<std::mutex> lock(_mtx);
         if (!_started)
         {
             return {RESULT_OK, "Component is already not running."};
