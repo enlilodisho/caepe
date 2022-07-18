@@ -12,15 +12,16 @@
 namespace caepe
 {
 
-    //class Component;
+    class Component;
 
     class EventDelegate {
     private:
         EventHandler& _eventHandler;
-        //std::vector<Component*> _subscribers;
 
     public:
         explicit EventDelegate(EventHandler &eventHandler);
+
+        Result subscribe(Component &component);
     };
 
 } // caepe

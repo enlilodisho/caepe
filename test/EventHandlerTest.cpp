@@ -1,7 +1,6 @@
 //
 // Created by Enlil on 7/18/2022.
 
-
 #include "ComponentMock.h"
 
 #include <caepe/Event.h>

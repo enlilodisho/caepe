@@ -11,4 +11,9 @@ namespace caepe {
     {
     }
 
+    Result EventDelegate::subscribe(Component &component)
+    {
+        return _eventHandler.subscribe(component);
+    }
+
 } // caepe
