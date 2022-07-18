@@ -5,6 +5,8 @@ set(SOURCE_FILES
     Component.cpp
     Result.cpp
     ComponentsManager.cpp
+    EventHandler.cpp
+    EventDelegate.cpp
 )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_FILES})
