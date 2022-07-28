@@ -29,6 +29,7 @@ namespace caepe
                 _message = other._message;
             }
         }
+        return *this;
     }
 
     bool Result::isSuccess() const

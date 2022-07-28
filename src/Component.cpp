@@ -69,6 +69,11 @@ namespace caepe {
         onStart();
         while (_started)
         {
+            onLoop();
+
+            // TODO process actions if any available
+
+            // process events if any available
             {
                 std::lock_guard lock(_eventsMtx);
                 while (!_pendingEvents.empty())
@@ -77,7 +82,6 @@ namespace caepe {
                     _pendingEvents.pop();
                 }
             }
-            onLoop();
         }
         onEnd();
     }
