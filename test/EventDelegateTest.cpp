@@ -12,8 +12,8 @@
 
 TEST(EventDelegateTest, EventDelegateSubscribeTest)
 {
-    caepe::EventHandler eventHandler;
-    caepe::EventDelegate eventDelegate(eventHandler);
+    caepe::EventManager eventManager;
+    caepe::EventDelegate eventDelegate(eventManager);
 
     ComponentMock subscriberComponent("SubscriberComponent");
     subscriberComponent.start();
@@ -22,7 +22,7 @@ TEST(EventDelegateTest, EventDelegateSubscribeTest)
     std::unique_ptr<caepe::Event> event = std::make_unique<caepe::Event>();
     event->_name = "Event1";
     ComponentMock senderComponent("SenderComponent");
-    eventHandler.post(&senderComponent, std::move(event));
+    eventManager.post(&senderComponent, std::move(event));
 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     auto receivedEvents = subscriberComponent.getReceivedEvents();

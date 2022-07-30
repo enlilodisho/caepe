@@ -6,14 +6,14 @@
 
 namespace caepe {
 
-    EventDelegate::EventDelegate(EventHandler &eventHandler)
-            : _eventHandler(eventHandler)
+    EventDelegate::EventDelegate(EventManager &eventManager)
+            : _eventManager(eventManager)
     {
     }
 
     Result EventDelegate::subscribe(Component &component)
     {
-        return _eventHandler.subscribe(component);
+        return _eventManager.subscribe(component);
     }
 
 } // caepe

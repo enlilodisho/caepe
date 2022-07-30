@@ -5,7 +5,7 @@ set(SOURCE_FILES
     Component.cpp
     Result.cpp
     ComponentsManager.cpp
-    EventHandler.cpp
+    EventManager.cpp
     EventDelegate.cpp
 )
 

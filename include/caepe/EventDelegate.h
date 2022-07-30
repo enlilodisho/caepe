@@ -5,7 +5,7 @@
 #ifndef CAEPE_EVENTDELEGATE_H
 #define CAEPE_EVENTDELEGATE_H
 
-#include "EventHandler.h"
+#include "EventManager.h"
 
 #include <vector>
 
@@ -16,10 +16,10 @@ namespace caepe
 
     class EventDelegate {
     private:
-        EventHandler& _eventHandler;
+        EventManager& _eventManager;
 
     public:
-        explicit EventDelegate(EventHandler &eventHandler);
+        explicit EventDelegate(EventManager &eventManager);
 
         Result subscribe(Component &component);
     };

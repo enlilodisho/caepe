@@ -9,7 +9,7 @@ set(TEST_SOURCE
         ComponentTest.cpp
         ResultTest.cpp
         ComponentsManagerTest.cpp
-        EventHandlerTest.cpp
+        EventManagerTest.cpp
         EventDelegateTest.cpp
 )
 

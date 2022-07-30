@@ -2,8 +2,8 @@
 // Created by Enlil on 7/18/2022.
 //
 
-#ifndef CAEPE_EVENTHANDLER_H
-#define CAEPE_EVENTHANDLER_H
+#ifndef CAEPE_EVENTMANAGER_H
+#define CAEPE_EVENTMANAGER_H
 
 #include "Event.h"
 #include "Result.h"
@@ -17,7 +17,7 @@ namespace caepe
 
     class Component;
 
-    class EventHandler {
+    class EventManager {
     private:
         std::mutex _mtx;
         std::vector<Component*> _subscribers;
@@ -28,4 +28,4 @@ namespace caepe
     };
 
 } // caepe
-#endif //CAEPE_EVENTHANDLER_H
+#endif //CAEPE_EVENTMANAGER_H
