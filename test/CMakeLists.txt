@@ -9,8 +9,12 @@ set(TEST_SOURCE
         ComponentTest.cpp
         ResultTest.cpp
         ComponentsManagerTest.cpp
+        EventTest.cpp
         EventManagerTest.cpp
         EventDelegateTest.cpp
+        ActionTest.cpp
+        ActionResponseTest.cpp
+        ActionResponseContainerTest.cpp
 )
 
 add_executable(${TEST_NAME} ${TEST_SOURCE})

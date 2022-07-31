@@ -29,7 +29,7 @@ namespace caepe {
         std::lock_guard lock(_mtx);
         for (Component* component : _subscribers)
         {
-            component->addEvent(sender, event_shared);
+            component->receiveEvent(sender, event_shared);
         }
         return Result(RESULT_OK);
     }

@@ -41,10 +41,22 @@ namespace caepe {
         return Result(RESULT_OK);
     }
 
-    Result Component::addEvent(Component *sender, std::shared_ptr<const Event> event)
+    [[maybe_unused]]
+    Result Component::receiveEvent(Component *sender, std::shared_ptr<const Event> event)
     {
         std::lock_guard lock(_eventsMtx);
-        _pendingEvents.emplace(sender, event);
+        _pendingEvents.emplace(sender, std::move(event));
+        return Result(RESULT_OK);
+    }
+
+    [[maybe_unused]]
+    Result Component::receiveAction(Component *sender, std::unique_ptr<Action> action,
+                                    std::shared_ptr<Action> &out_action)
+    {
+        std::shared_ptr action_shared = std::move(action);
+        std::lock_guard lock(_actionsMtx);
+        _pendingActions.emplace(sender, action_shared);
+        out_action = action_shared;
         return Result(RESULT_OK);
     }
 
@@ -52,11 +64,16 @@ namespace caepe {
     {
     }
 
-    void Component::onEvent(Component& sender, std::shared_ptr<const Event> event)
+    void Component::onLoop()
     {
     }
 
-    void Component::onLoop()
+    void Component::onAction(Component &sender, std::shared_ptr<Action> action,
+                             std::shared_ptr<ActionResponseContainer> responseContainer)
+    {
+    }
+
+    void Component::onEvent(Component& sender, std::shared_ptr<const Event> event)
     {
     }
 
@@ -71,7 +88,62 @@ namespace caepe {
         {
             onLoop();
 
-            // TODO process actions if any available
+            // check pending action responses
+            {
+                auto it = _pendingActionResponses.begin();
+                while (it != _pendingActionResponses.end())
+                {
+                    auto& action = std::get<0>(*it);
+                    if (action->isResponseSet())
+                    {
+                        it = _pendingActionResponses.erase(it);
+                        continue;
+                    }
+                    auto& actionResponseContainer = std::get<1>(*it);
+                    auto& startingResponseContainerCopyCount = std::get<2>(*it);
+                    if (actionResponseContainer.use_count() == startingResponseContainerCopyCount)
+                    {
+                        actionResponseContainer->setActionResponse(
+                                std::make_unique<ActionResponse>(ACTION_RESPONSE_NONE));
+                        it = _pendingActionResponses.erase(it);
+                    }
+                    else
+                    {
+                        it++;
+                    }
+                }
+            }
+
+            // process actions if any available
+            {
+                std::lock_guard lock(_actionsMtx);
+                while (!_pendingActions.empty())
+                {
+                    std::shared_ptr<Action> action = std::move(_pendingActions.front().second);
+                    std::shared_ptr<ActionResponseContainer> actionResponseContainer =
+                            std::make_shared<ActionResponseContainer>();
+                    action->setResponseContainer(actionResponseContainer);
+                    long startingResponseContainerCopyCount = actionResponseContainer.use_count();
+                    onAction(*_pendingActions.front().first, action, actionResponseContainer);
+
+                    if (!action->isResponseSet())
+                    {
+                        if (actionResponseContainer.use_count() == startingResponseContainerCopyCount)
+                        {
+                            actionResponseContainer->setActionResponse(
+                                    std::make_unique<ActionResponse>(ACTION_RESPONSE_NONE));
+                        }
+                        else
+                        {
+                            _pendingActionResponses.emplace_back(std::move(action),
+                                                                 std::move(actionResponseContainer),
+                                                            startingResponseContainerCopyCount);
+                        }
+                    }
+
+                    _pendingActions.pop();
+                }
+            }
 
             // process events if any available
             {

@@ -7,6 +7,9 @@ set(SOURCE_FILES
     ComponentsManager.cpp
     EventManager.cpp
     EventDelegate.cpp
+    Action.cpp
+    ActionResponse.cpp
+    ActionResponseContainer.cpp
 )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_FILES})

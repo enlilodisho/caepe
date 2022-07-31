@@ -7,13 +7,17 @@
 
 #include "Result.h"
 #include "Event.h"
+#include "Action.h"
+#include "ActionResponseContainer.h"
 
 #include <string>
 #include <thread>
 #include <memory>
 #include <mutex>
 #include <queue>
+#include <vector>
 #include <utility>
+#include <tuple>
 
 namespace caepe {
 
@@ -23,15 +27,20 @@ namespace caepe {
         bool _started = false;
         std::mutex _startStopMtx;
 
+        std::queue<std::pair<Component*, std::shared_ptr<Action>>> _pendingActions;
+        std::vector<std::tuple<std::shared_ptr<Action>, std::shared_ptr<ActionResponseContainer>, long>> _pendingActionResponses;
         std::queue<std::pair<Component*, std::shared_ptr<const Event>>> _pendingEvents;
+        std::mutex _actionsMtx;
         std::mutex _eventsMtx;
 
         void componentThread();
 
     protected:
         virtual void onStart();
-        virtual void onEvent(Component &sender, std::shared_ptr<const Event> event);
         virtual void onLoop();
+        virtual void onAction(Component &sender, std::shared_ptr<Action> action,
+                              std::shared_ptr<ActionResponseContainer> responseContainer);
+        virtual void onEvent(Component &sender, std::shared_ptr<const Event> event);
         virtual void onEnd();
 
     public:
@@ -42,7 +51,12 @@ namespace caepe {
 
         Result start();
         Result stop();
-        Result addEvent(Component *sender, std::shared_ptr<const Event> event);
+
+        [[maybe_unused]]
+        Result receiveAction(Component *sender, std::unique_ptr<Action> action,
+                             std::shared_ptr<Action> &out_action);
+        [[maybe_unused]]
+        Result receiveEvent(Component *sender, std::shared_ptr<const Event> event);
 
         [[nodiscard]]
         bool isStarted() const;
