@@ -53,9 +53,14 @@ namespace caepe {
     Result Component::receiveAction(Component *sender, std::unique_ptr<Action> action,
                                     std::shared_ptr<Action> &out_action)
     {
+        std::shared_ptr<ActionResponseContainer> actionResponseContainer = std::make_shared<ActionResponseContainer>();
+        if (action->setResponseContainer(actionResponseContainer).getValue() == RESULT_ERROR)
+        {
+            return {RESULT_ERROR, "Cannot set response container for action." };
+        }
         std::shared_ptr action_shared = std::move(action);
         std::lock_guard lock(_actionsMtx);
-        _pendingActions.emplace(sender, action_shared);
+        _pendingActions.emplace(sender, action_shared, std::move(actionResponseContainer));
         out_action = action_shared;
         return Result(RESULT_OK);
     }
@@ -119,12 +124,10 @@ namespace caepe {
                 std::lock_guard lock(_actionsMtx);
                 while (!_pendingActions.empty())
                 {
-                    std::shared_ptr<Action> action = std::move(_pendingActions.front().second);
-                    std::shared_ptr<ActionResponseContainer> actionResponseContainer =
-                            std::make_shared<ActionResponseContainer>();
-                    action->setResponseContainer(actionResponseContainer);
+                    std::shared_ptr<Action> action = std::move(std::get<1>(_pendingActions.front()));
+                    std::shared_ptr<ActionResponseContainer> actionResponseContainer = std::move(std::get<2>(_pendingActions.front()));
                     long startingResponseContainerCopyCount = actionResponseContainer.use_count();
-                    onAction(*_pendingActions.front().first, action, actionResponseContainer);
+                    onAction(*std::get<0>(_pendingActions.front()), action, actionResponseContainer);
 
                     if (!action->isResponseSet())
                     {

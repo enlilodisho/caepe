@@ -27,7 +27,7 @@ namespace caepe {
         bool _started = false;
         std::mutex _startStopMtx;
 
-        std::queue<std::pair<Component*, std::shared_ptr<Action>>> _pendingActions;
+        std::queue<std::tuple<Component*, std::shared_ptr<Action>, std::shared_ptr<ActionResponseContainer>>> _pendingActions;
         std::vector<std::tuple<std::shared_ptr<Action>, std::shared_ptr<ActionResponseContainer>, long>> _pendingActionResponses;
         std::queue<std::pair<Component*, std::shared_ptr<const Event>>> _pendingEvents;
         std::mutex _actionsMtx;

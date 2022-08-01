@@ -75,6 +75,20 @@ TEST(ComponentTest, ComponentReceiveActionTest)
     ASSERT_EQ(action.get(), std::get<1>(receivedActions[0]).get());
 }
 
+TEST(ComponentTest, ComponentReceivesActionWithResponseContainerAlreadySetTest)
+{
+    ComponentMock component1("SomeComponent");
+    component1.start();
+
+    ComponentMock senderComponent("SenderComponent");
+    std::shared_ptr<caepe::Action> action;
+    std::unique_ptr<caepe::Action> tempActionPtr = std::make_unique<caepe::Action>("DummyAction");
+    tempActionPtr->setResponseContainer(std::make_shared<caepe::ActionResponseContainer>());
+    ASSERT_EQ(component1.receiveAction(&senderComponent,
+                                       std::move(tempActionPtr),
+                                       action).getValue(), caepe::RESULT_ERROR);
+}
+
 TEST(ComponentTest, ComponentRespondsToActionTest) {
     ComponentMock component1("SomeComponent");
     component1.start();
