@@ -54,9 +54,10 @@ namespace caepe {
                                     std::shared_ptr<Action> &out_action)
     {
         std::shared_ptr<ActionResponseContainer> actionResponseContainer = std::make_shared<ActionResponseContainer>();
-        if (action->setResponseContainer(actionResponseContainer).getValue() == RESULT_ERROR)
+        Result result = action->setResponseContainer(actionResponseContainer);
+        if (result.getValue() == RESULT_ERROR)
         {
-            return {RESULT_ERROR, "Cannot set response container for action." };
+            return result;
         }
         std::shared_ptr action_shared = std::move(action);
         std::lock_guard lock(_actionsMtx);

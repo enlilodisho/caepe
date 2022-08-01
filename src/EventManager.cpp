@@ -27,11 +27,12 @@ namespace caepe {
     {
         std::shared_ptr event_shared = std::move(event);
         std::lock_guard lock(_mtx);
+        Result result(RESULT_OK);
         for (Component* component : _subscribers)
         {
-            component->receiveEvent(sender, event_shared);
+            result += component->receiveEvent(sender, event_shared);
         }
-        return Result(RESULT_OK);
+        return result;
     }
 
 } // caepe
