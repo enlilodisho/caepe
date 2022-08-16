@@ -4,7 +4,6 @@ set(SOURCE_FILES
     Dummy.cpp
     Component.cpp
     Result.cpp
-    ComponentsManager.cpp
     EventManager.cpp
     EventDelegate.cpp
     Action.cpp

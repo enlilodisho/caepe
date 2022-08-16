@@ -5,7 +5,7 @@ Caepe revolves around 3 main concepts: Components, Actions, and Events
 
 ### Components
 A Component is a module which encapsulates a group of related functions and data, in order to act as an interface providing a
-particular software feature or service. With a program build on CAEPE, all functionalities are expected to be implemented
+particular software feature or service. With a program built on CAEPE, all functionalities are expected to be implemented
 through the use of many components, each running on their own thread. CAEPE provides Actions and Events, in order to allow 
 these otherwise independent units to communicate and interact with each other.
 
@@ -92,7 +92,7 @@ if (action_cpy->isResponseSet())
 
 Subscribing and posting events:
 ```c++
-// From sender component header:
+// Sender component header:
 private:
   caepe::EventManager eventManager;
 public:

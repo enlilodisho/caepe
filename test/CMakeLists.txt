@@ -8,7 +8,6 @@ set(TEST_SOURCE
         DummyTest.cpp
         ComponentTest.cpp
         ResultTest.cpp
-        ComponentsManagerTest.cpp
         EventTest.cpp
         EventManagerTest.cpp
         EventDelegateTest.cpp
