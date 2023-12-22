@@ -21,6 +21,7 @@ namespace caepe
 
         ActionResponse();
         explicit ActionResponse(const std::string &message);
+        virtual ~ActionResponse();
     };
 
 } // caepe

@@ -47,7 +47,7 @@ namespace caepe {
         const std::string _name;
 
         explicit Component(std::string name);
-        ~Component();
+        virtual ~Component();
 
         Result start();
         Result stop();

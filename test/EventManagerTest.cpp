@@ -19,8 +19,7 @@ TEST(EventManagerTest, EventManagerSubscribeAndPostTest)
     component1.start();
     caepe::EventManager eventManager;
     ASSERT_EQ(eventManager.subscribe(component1).getValue(), caepe::RESULT_OK);
-    std::unique_ptr<caepe::Event> event = std::make_unique<caepe::Event>();
-    event->_name = "Event1";
+    std::unique_ptr<caepe::Event> event = std::make_unique<caepe::Event>("Event1");
     ASSERT_EQ(eventManager.post(&senderComponent, std::move(event)).getValue(), caepe::RESULT_OK);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     auto receivedEvents = std::move(component1.getReceivedEvents());

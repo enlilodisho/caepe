@@ -11,6 +11,9 @@ namespace caepe {
 
     struct Event
     {
+        explicit Event(std::string name);
+        virtual ~Event();
+
         std::string _name;
     };
 

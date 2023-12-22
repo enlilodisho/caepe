@@ -4,6 +4,7 @@ set(SOURCE_FILES
     Dummy.cpp
     Component.cpp
     Result.cpp
+    Event.cpp
     EventManager.cpp
     EventDelegate.cpp
     Action.cpp
@@ -11,5 +12,5 @@ set(SOURCE_FILES
     ActionResponseContainer.cpp
 )
 
-add_library(${LIBRARY_NAME} STATIC ${SOURCE_FILES})
+add_library(${LIBRARY_NAME} SHARED ${SOURCE_FILES})
 target_include_directories(${LIBRARY_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)

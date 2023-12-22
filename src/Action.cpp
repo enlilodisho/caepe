@@ -11,6 +11,8 @@ namespace caepe {
     {
     }
 
+    Action::~Action() = default;
+
     Result Action::setResponseContainer(std::shared_ptr<ActionResponseContainer> responseContainer)
     {
         if (_responseContainer)

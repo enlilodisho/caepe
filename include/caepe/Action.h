@@ -21,6 +21,7 @@ namespace caepe {
 
     public:
         explicit Action(const std::string& name);
+        virtual ~Action();
 
         Result setResponseContainer(std::shared_ptr<ActionResponseContainer> responseContainer);
 

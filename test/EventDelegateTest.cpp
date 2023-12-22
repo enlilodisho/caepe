@@ -19,8 +19,7 @@ TEST(EventDelegateTest, EventDelegateSubscribeTest)
     subscriberComponent.start();
     ASSERT_EQ(eventDelegate.subscribe(subscriberComponent).getValue(), caepe::RESULT_OK);
 
-    std::unique_ptr<caepe::Event> event = std::make_unique<caepe::Event>();
-    event->_name = "Event1";
+    std::unique_ptr<caepe::Event> event = std::make_unique<caepe::Event>("Event1");
     ComponentMock senderComponent("SenderComponent");
     eventManager.post(&senderComponent, std::move(event));
 

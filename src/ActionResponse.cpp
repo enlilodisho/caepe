@@ -17,4 +17,6 @@ namespace caepe
     {
     }
 
+    ActionResponse::~ActionResponse() = default;
+
 } // caepe

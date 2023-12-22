@@ -44,8 +44,7 @@ TEST(ComponentTest, ComponentReceiveEventTest)
     ComponentMock component1("SomeComponent");
     component1.start();
 
-    std::shared_ptr<caepe::Event> event = std::make_shared<caepe::Event>();
-    event->_name = "SomeEvent";
+    std::shared_ptr<caepe::Event> event = std::make_shared<caepe::Event>("SomeEvent");
     ComponentMock senderComponent("SenderComponent");
     ASSERT_EQ(component1.receiveEvent(&senderComponent, event).getValue(), caepe::RESULT_OK);
 
