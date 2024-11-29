@@ -11,6 +11,11 @@ namespace caepe {
     {
     }
 
+    Action::Action(const std::string& name, const std::vector<Action::Parameter>& params)
+            : _name(name), _parameters(params)
+    {
+    }
+
     Action::~Action() = default;
 
     Result Action::setResponseContainer(std::shared_ptr<ActionResponseContainer> responseContainer)
@@ -30,6 +35,11 @@ namespace caepe {
     const std::string& Action::getName() const
     {
         return _name;
+    }
+
+    const std::vector<Action::Parameter>& Action::getParameters() const
+    {
+        return _parameters;
     }
 
     Result Action::getResponse(ActionResponse &actionResponse) const

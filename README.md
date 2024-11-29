@@ -76,7 +76,7 @@ component.stop(); // stop component
 Sending an action to a component:
 ```c++
 caepe::Component aComponent;
-std::unique_ptr<caepe::Action> actionToSend = std::make_unique<caepe::Action>("PingRequest");
+std::unique_ptr<caepe::Action> actionToSend = std::make_unique<caepe::Action>("PingRequest", std::vector<caepe::Action::Parameter>{"1.1.1.1", 80});
 std::shared_ptr<caepe::Action> action_cpy;
 aComponent.receiveAction(this, std::move(actionToSend), action_cpy);
 

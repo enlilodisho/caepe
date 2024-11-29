@@ -13,6 +13,27 @@ TEST(ActionTest, ActionNameFieldTest)
     ASSERT_EQ(action.getName(), "DummyAction");
 }
 
+TEST(ActionTest, ActionParametersFieldTest)
+{
+    caepe::Action actionWithoutParams { "DummyActionWithoutParameters" };
+    EXPECT_TRUE(actionWithoutParams.getParameters().empty());
+
+    caepe::Action actionWithParams { "DummyActionWithParams", {10, 1.3f, 4.24, 'a', "test message" }};
+    auto& params = actionWithParams.getParameters();
+    ASSERT_GE(params.size(), 5);
+    EXPECT_EQ(params.size(), 5);
+    ASSERT_TRUE(std::holds_alternative<int>(params[0]));
+    EXPECT_EQ(std::get<int>(params[0]), 10);
+    ASSERT_TRUE(std::holds_alternative<float>(params[1]));
+    EXPECT_EQ(std::get<float>(params[1]), 1.3f);
+    ASSERT_TRUE(std::holds_alternative<double>(params[2]));
+    EXPECT_EQ(std::get<double>(params[2]), 4.24);
+    ASSERT_TRUE(std::holds_alternative<char>(params[3]));
+    EXPECT_EQ(std::get<char>(params[3]), 'a');
+    ASSERT_TRUE(std::holds_alternative<std::string>(params[4]));
+    EXPECT_EQ(std::get<std::string>(params[4]), "test message");
+}
+
 TEST(ActionTest, ActionSetResponseContainerTest)
 {
     caepe::Action action { "Action" };
