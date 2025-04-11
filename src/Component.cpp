@@ -110,7 +110,7 @@ namespace caepe {
                     if (actionResponseContainer.use_count() == startingResponseContainerCopyCount)
                     {
                         actionResponseContainer->setActionResponse(
-                                std::make_unique<ActionResponse>(ACTION_RESPONSE_NONE));
+                                std::make_unique<ActionResponse>(ActionResponse::NONE));
                         it = _pendingActionResponses.erase(it);
                     }
                     else
@@ -135,7 +135,7 @@ namespace caepe {
                         if (actionResponseContainer.use_count() == startingResponseContainerCopyCount)
                         {
                             actionResponseContainer->setActionResponse(
-                                    std::make_unique<ActionResponse>(ACTION_RESPONSE_NONE));
+                                    std::make_unique<ActionResponse>(ActionResponse::NONE));
                         }
                         else
                         {

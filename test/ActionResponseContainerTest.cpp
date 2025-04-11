@@ -19,7 +19,7 @@ TEST(ActionResponseContainerTest, SetAndGetActionResponseTest)
     std::unique_ptr<caepe::ActionResponse> actionResponse = std::make_unique<caepe::ActionResponse>("DummyResponse");
     ASSERT_EQ(responseContainer.setActionResponse(std::move(actionResponse)).getValue(), caepe::RESULT_OK);
     ASSERT_NE(responseContainer.getActionResponse(), nullptr);
-    ASSERT_EQ(responseContainer.getActionResponse()->_message, "DummyResponse");
+    ASSERT_EQ(responseContainer.getActionResponse()->getMessage(), "DummyResponse");
 }
 
 TEST(ActionResponseContainerTest, SetActionResponseTwiceFailsTest)
@@ -30,7 +30,7 @@ TEST(ActionResponseContainerTest, SetActionResponseTwiceFailsTest)
     actionResponse = std::make_unique<caepe::ActionResponse>("DummyResponse2");
     ASSERT_EQ(responseContainer.setActionResponse(std::move(actionResponse)).getValue(), caepe::RESULT_ERROR);
     ASSERT_NE(responseContainer.getActionResponse(), nullptr);
-    ASSERT_EQ(responseContainer.getActionResponse()->_message, "DummyResponse1");
+    ASSERT_EQ(responseContainer.getActionResponse()->getMessage(), "DummyResponse1");
 }
 
 TEST(ActionResponseContainerTest, IsResponseSetTest)

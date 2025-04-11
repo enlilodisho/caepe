@@ -45,7 +45,7 @@ TEST(ActionTest, ActionSetResponseContainerTest)
     ASSERT_EQ(action.getResponse(actionResponse).getValue(), caepe::RESULT_ERROR);
     responseContainer->setActionResponse(std::make_unique<caepe::ActionResponse>("Response"));
     ASSERT_EQ(action.getResponse(actionResponse).getValue(), caepe::RESULT_OK);
-    ASSERT_EQ(actionResponse._message, "Response");
+    ASSERT_EQ(actionResponse.getMessage(), "Response");
 }
 
 TEST(ActionTest, ActionSetSameResponseContainerTwiceTest)
@@ -71,7 +71,7 @@ TEST(ActionTest, ActionSetResponseContainerFailsWhenAlreadySetToAnotherContainer
               caepe::RESULT_ERROR);
     caepe::ActionResponse actionResponse;
     ASSERT_EQ(action.getResponse(actionResponse).getValue(), caepe::RESULT_OK);
-    ASSERT_EQ(actionResponse._message, "Response1");
+    ASSERT_EQ(actionResponse.getMessage(), "Response1");
 }
 
 TEST(ActionTest, ActionIsResponseSetTest)
@@ -81,6 +81,6 @@ TEST(ActionTest, ActionIsResponseSetTest)
     std::shared_ptr<caepe::ActionResponseContainer> responseContainer = std::make_shared<caepe::ActionResponseContainer>();
     action.setResponseContainer(responseContainer);
     ASSERT_FALSE(action.isResponseSet());
-    responseContainer->setActionResponse(std::make_unique<caepe::ActionResponse>(caepe::ACTION_RESPONSE_NONE));
+    responseContainer->setActionResponse(std::make_unique<caepe::ActionResponse>(caepe::ActionResponse::NONE));
     ASSERT_TRUE(action.isResponseSet());
 }

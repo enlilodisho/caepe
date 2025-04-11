@@ -115,7 +115,7 @@ TEST(ComponentTest, ComponentRespondsToActionTest) {
     {
         caepe::ActionResponse actionResponse;
         ASSERT_EQ(action->getResponse(actionResponse).getValue(), caepe::RESULT_OK);
-        ASSERT_EQ(actionResponse._message, "DummyResponse");
+        ASSERT_EQ(actionResponse.getMessage(), "DummyResponse");
     }
 }
 
@@ -137,17 +137,17 @@ TEST(ComponentTest, ComponentSetsResponseToNoneWhenContainerCopyIsDeleted)
     ASSERT_FALSE(action->isResponseSet());
     caepe::ActionResponse actionResponse;
     ASSERT_EQ(action->getResponse(actionResponse).getValue(), caepe::RESULT_ERROR);
-    ASSERT_EQ(actionResponse._message, caepe::ACTION_RESPONSE_UNDEFINED);
+    ASSERT_EQ(actionResponse.getMessage(), caepe::ActionResponse::UNDEFINED);
 
     {
         auto receivedActions = component1.getReceivedActions();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         ASSERT_FALSE(action->isResponseSet());
         ASSERT_EQ(action->getResponse(actionResponse).getValue(), caepe::RESULT_ERROR);
-        ASSERT_EQ(actionResponse._message, caepe::ACTION_RESPONSE_UNDEFINED);
+        ASSERT_EQ(actionResponse.getMessage(), caepe::ActionResponse::UNDEFINED);
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     ASSERT_TRUE(action->isResponseSet());
     ASSERT_EQ(action->getResponse(actionResponse).getValue(), caepe::RESULT_OK);
-    ASSERT_EQ(actionResponse._message, caepe::ACTION_RESPONSE_NONE);
+    ASSERT_EQ(actionResponse.getMessage(), caepe::ActionResponse::NONE);
 }

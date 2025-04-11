@@ -8,7 +8,7 @@ namespace caepe
 {
 
     ActionResponse::ActionResponse()
-        : _message(ACTION_RESPONSE_UNDEFINED)
+        : _message(ActionResponse::UNDEFINED)
     {
     }
 
@@ -17,6 +17,26 @@ namespace caepe
     {
     }
 
+    ActionResponse::ActionResponse(const std::string &message, std::any data)
+        : _message(message), _data(std::move(data))
+    {
+    }
+
     ActionResponse::~ActionResponse() = default;
+
+    const std::string& ActionResponse::getMessage() const
+    {
+        return _message;
+    }
+
+    bool ActionResponse::hasData() const
+    {
+        return _data.has_value();
+    }
+
+    const std::type_info& ActionResponse::getDataType() const
+    {
+        return _data.type();
+    }
 
 } // caepe
